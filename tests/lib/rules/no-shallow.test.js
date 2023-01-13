@@ -102,7 +102,7 @@ const INVALID_PATTERNS = {
 };
 
 const ruleTester = new RuleTester({ parserOptions });
-ruleTester.run("no-shallow-render", rule, {
+ruleTester.run("no-shallow", rule, {
   valid: VALID_PATTERNS.map((pattern) => ({ code: pattern })),
 
   invalid: Object.entries(INVALID_PATTERNS).flatMap(([errorId, patterns]) =>
@@ -113,16 +113,16 @@ ruleTester.run("no-shallow-render", rule, {
   ),
 });
 
-ruleTester.run("no-shallow-render", rule, {
+ruleTester.run("no-shallow", rule, {
   valid: [
     `
-        // defined in global scope outside of this module
-        // global.shallow = require('enzyme').shallow;
-        it('should render component', () => {
-            const wrapper = shallow(<MyReactComp />);
-            expect(wrapper.emptyRender()).toBe(true);
-        });
-      `,
+      // defined in global scope outside of this module
+      // global.shallow = require('enzyme').shallow;
+      it('should render component', () => {
+          const wrapper = shallow(<MyReactComp />);
+          expect(wrapper.emptyRender()).toBe(true);
+      });
+    `,
   ].map((pattern) => ({
     code: pattern,
     options: [{ resolveAsGlobal: false }],
