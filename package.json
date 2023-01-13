@@ -1,9 +1,10 @@
 {
   "name": "eslint-plugin-enzyme-deprecation",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "ESLint plugin to help manage Enzyme renderer deprecation",
   "main": "lib/index.js",
   "scripts": {
+    "lint": "eslint ./ --fix",
     "test": "jest"
   },
   "repository": {
