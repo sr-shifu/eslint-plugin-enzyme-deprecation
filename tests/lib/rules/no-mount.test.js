@@ -125,7 +125,7 @@ ruleTester.run("no-mount", rule, {
     `,
   ].map((pattern) => ({
     code: pattern,
-    options: [{ resolveAsGlobal: false }],
+    options: [{ implicitlyGlobal: false }],
   })),
   invalid: [
     `
@@ -138,7 +138,7 @@ ruleTester.run("no-mount", rule, {
     `,
   ].map((pattern) => ({
     code: pattern,
-    options: [{ resolveAsGlobal: true }],
+    options: [{ implicitlyGlobal: true }],
     errors: [{ messageId: "noMountCall" }],
   })),
 });
