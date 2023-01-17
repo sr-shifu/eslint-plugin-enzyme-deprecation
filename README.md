@@ -1,6 +1,6 @@
 # eslint-plugin-enzyme-deprecation
 
-A custom ESLint plugin that detects and warns about using render APIs of Enzyme (`shallow`/`mount`). If you are using React in your project and want to switch to a future-proof solution for rendering components in your tests (e.g., React Testing Library), you might find this plugin useful. `eslint-plugin-enzyme-deprecation` plugin helps developers that require some way of preventing od writing a new code using these APIs as well as tracking their progress of migration from Enzyme to the library of your choice.
+A custom ESLint plugin that detects and warns about using render APIs of Enzyme (`shallow`/`mount`). If you are using React in your project and want to switch to a future-proof solution for rendering components in your tests (e.g., React Testing Library), you might find this plugin useful. `eslint-plugin-enzyme-deprecation` plugin helps developers that require some way of preventing od writing a new code using these APIs as well as tracking their progress of migration from Enzyme to the library of your choice. You can find more details about migration strategies and plugin's implementation details in this [article](https://thesametech.com/migrate-away-from-enzyme/).
 
 ## Installation
 
