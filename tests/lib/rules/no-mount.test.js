@@ -45,72 +45,75 @@ const VALID_PATTERNS = [
         expect(wrapper.emptyRender()).toBe(true);
     });
   `,
+  `
+    import {shallow, mount} from 'not-enzyme';
+    it('should render component', () => {
+        const wrapper = shallow(<MyReactComp />);
+        expect(wrapper.emptyRender()).toBe(true);
+    });
+  `,
 ];
 
-const INVALID_PATTERNS = {
-  noMountCall: [
-    `
+const INVALID_PATTERNS = [
+  `
       const enzymeApi = require('enzyme');
       it('should render component', () => {
           const wrapper = enzymeApi.mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       const { mount } = require('enzyme');
       it('should render component', () => {
           const wrapper = mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       const { shallow, mount } = require('enzyme');
       it('should render component', () => {
           const wrapper = mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       import {mount} from 'enzyme';
       it('should render component', () => {
           const wrapper = mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       import {shallow, mount} from 'enzyme';
       it('should render component', () => {
           const wrapper = mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       import * as enzymeApi from 'enzyme';
       it('should render component', () => {
           const wrapper = enzymeApi.mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-    `
+  `
       import enzymeApi from 'enzyme';
       it('should render component', () => {
           const wrapper = enzymeApi.mount(<MyReactComp />);
           expect(wrapper.emptyRender()).toBe(true);
       });
     `,
-  ],
-};
+];
 
 const ruleTester = new RuleTester({ parserOptions });
-ruleTester.run("no-mount", rule, {
+ruleTester.run("no-shallow", rule, {
   valid: VALID_PATTERNS.map((pattern) => ({ code: pattern })),
 
-  invalid: Object.entries(INVALID_PATTERNS).flatMap(([errorId, patterns]) =>
-    patterns.map((pattern) => ({
-      code: pattern,
-      errors: [{ messageId: errorId }],
-    }))
-  ),
+  invalid: INVALID_PATTERNS.map((pattern) => ({
+    code: pattern,
+    errors: [{ messageId: "noMountCall" }],
+  })),
 });
 
 ruleTester.run("no-mount", rule, {
@@ -139,6 +142,49 @@ ruleTester.run("no-mount", rule, {
   ].map((pattern) => ({
     code: pattern,
     options: [{ implicitlyGlobal: true }],
+    errors: [{ messageId: "noMountCall" }],
+  })),
+});
+
+ruleTester.run("no-shallow", rule, {
+  valid: VALID_PATTERNS.concat(
+    ...VALID_PATTERNS.map((code) =>
+      code
+        .replace(/\bmount\b/g, "mountWithReduxState")
+        .replace(/\benzyme\b/, "@testUtils")
+    )
+  ).map((pattern) => ({
+    code: pattern,
+    options: [
+      {
+        resolveAs: [
+          {
+            name: "mountWithReduxState",
+            sources: ["^@test-utils"],
+          },
+        ],
+      },
+    ],
+  })),
+
+  invalid: INVALID_PATTERNS.concat(
+    ...INVALID_PATTERNS.map((code) =>
+      code
+        .replace(/\mount\b/g, "mountWithReduxState")
+        .replace(/\benzyme\b/, "@testUtils")
+    )
+  ).map((pattern) => ({
+    code: pattern,
+    options: [
+      {
+        resolveAs: [
+          {
+            name: "mountWithReduxState",
+            sources: ["^@testUtils"],
+          },
+        ],
+      },
+    ],
     errors: [{ messageId: "noMountCall" }],
   })),
 });

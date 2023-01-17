@@ -32,7 +32,11 @@ Add `enzyme-deprecation` to the plugins section of your `.eslintrc` configuratio
 }
 ```
 
-If you assigm Enzyme API to global scope at test initialization stage:
+## Additional configuration
+
+### Enzyme API is defined implicitly in global scope
+
+If you assign Enzyme API to global scope at test initialization stage:
 
 ```js
 global.shallow = require("enzyme").shallow;
@@ -46,6 +50,24 @@ you might want to pass additional configuration to ESLint rules:
   "rules": {
     "enzyme-deprecation/no-shallow": [2, { "implicitlyGlobal": true }],
     "enzyme-deprecation/no-mount": [2, { "implicitlyGlobal": true }]
+  }
+}
+```
+
+### Code has custom implementation built on top of Enzyme API
+
+If you are using Redux, then most likely you have some custom `shallowWithState` method in your package that automatically wraps component under test into Redux store provider. In this case you may want to enhance rule to search for this custom API.
+
+**Example:**
+
+```json
+{
+  "plugins": ["enzyme-deprecation"],
+  "rules": {
+    "enzyme-deprecation/no-shallow": [2, { "resolveAs": [{
+        "name": "shallowWithState",
+        "sources" ["^@testUtils"]
+    }] }],
   }
 }
 ```
