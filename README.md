@@ -20,6 +20,8 @@ Note: If you installed ESLint globally (using the `-g` flag) then you must also 
 
 ## Usage
 
+### Linting with no tracking
+
 Add `enzyme-deprecation` to the plugins section of your `.eslintrc` configuration file. You can specify the rules you want to use under the `rules` section.
 
 ```json
@@ -31,6 +33,47 @@ Add `enzyme-deprecation` to the plugins section of your `.eslintrc` configuratio
   }
 }
 ```
+
+### Linting with tracking
+
+**Option 1:** Define separate ESLint config for migration
+
+`.eslintrc.migration.js`:
+
+```js
+module.exports = {
+  parser: "<your-parser>",
+  extends: ["plugin:enzyme-deprecation/recommended"],
+  env: {
+    browser: true,
+  },
+  rules: {
+    "enzyme-deprecation/no-shallow": 2,
+    "enzyme-deprecation/no-mount": 2,
+  },
+};
+```
+
+And in your `package.json` command define command:
+
+```
+"track:migration": "NODE_ENV=development eslint --no-eslintrc  --config .eslintrc.migration.js -f node_modules/eslint-plugin-enzyme-deprecation/lib/formatter --ext .test.jsx src/"
+```
+
+You can also configure display value format via environment variable:
+
+```
+"track:migration": "EDP_VALUE_FORMAT=<format> NODE_ENV=development eslint --no-eslintrc  --config .eslintrc.migration.js -f node_modules/eslint-plugin-enzyme-deprecation/lib/formatter --ext .test.jsx src",
+```
+
+Supported formats:
+
+- `absolute-value`
+- `percentage`
+
+**Option 2:** Using Node.js API
+
+You can find an example [here](https://github.com/sr-shifu/eslint-plugin-enzyme-deprecation/blob/main/examples/run.js) (see `npm run demo` command in `package.json` to see how to run it).
 
 ## Additional configuration
 
