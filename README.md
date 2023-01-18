@@ -54,7 +54,7 @@ module.exports = {
 };
 ```
 
-And in your `package.json` command define command:
+And in your `package.json` define command:
 
 ```
 "track:migration": "NODE_ENV=development eslint --no-eslintrc  --config .eslintrc.migration.js -f node_modules/eslint-plugin-enzyme-deprecation/lib/formatter --ext .test.jsx src/"
