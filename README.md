@@ -115,6 +115,8 @@ If you are using Redux, then most likely you have some custom `shallowWithState`
 }
 ```
 
+`sources` option is used to determine the source of the import of identifier with name `name` is an (`import <name> from '<source>'`). It takes both RegExp and plain-text strings.
+
 ## Supported Rules
 
 - `enzyme-deprecation/no-shallow`: warns when using Enzyme's `shallow` [API](https://enzymejs.github.io/enzyme/docs/api/shallow.html)
