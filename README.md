@@ -1,6 +1,6 @@
 # eslint-plugin-enzyme-deprecation
 
-A custom ESLint plugin that detects and warns about using render APIs of Enzyme (`shallow`/`mount`). If you are using React in your project and want to switch to a future-proof solution for rendering components in your tests (e.g., React Testing Library), you might find this plugin useful. `eslint-plugin-enzyme-deprecation` plugin helps developers that require some way of preventing od writing a new code using these APIs as well as tracking their progress of migration from Enzyme to the library of your choice. You can find more details about migration strategies and plugin's implementation details in this [article](https://thesametech.com/migrate-away-from-enzyme/).
+A custom ESLint plugin that detects and warns about using render APIs of Enzyme (`shallow`/`mount`). If you are using React in your project and want to switch to a future-proof solution for rendering components in your tests (e.g., React Testing Library), you might find this plugin useful. `eslint-plugin-enzyme-deprecation` plugin helps developers that require some way of preventing of writing a new code using these APIs as well as tracking their progress of migration from Enzyme to the library of your choice. You can find more details about migration strategies and plugin implementation details in this [article](https://thesametech.com/migrate-away-from-enzyme/).
 
 ## Installation
 
@@ -99,7 +99,7 @@ you might want to pass additional configuration to ESLint rules:
 
 ### Code has custom implementation built on top of Enzyme API
 
-If you are using Redux, then most likely you have some custom `shallowWithState` method in your package that automatically wraps component under test into Redux store provider. In this case you may want to enhance rule to search for this custom API.
+If you are using Redux, then most likely you have some custom `shallowWithState` method in your package that automatically wraps  the component under test into Redux store provider. In this case, you may want to enhance rule to search for this custom API.
 
 **Example:**
 
